@@ -1,0 +1,34 @@
+{
+  "name": "jsl-server",
+  "version": "0.0.0",
+  "description": "Just Save Life Server",
+  "private": true,
+  "main": "server.js",
+  "author": "Timur Shemsedinov <timur.shemsedinov@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "Just Save Life",
+    "Medical Information System"
+  ],
+  "scripts": {
+    "lint": "eslint . && prettier --check \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/.*rc\" \"**/*.yml\" \"**/*.ts\"",
+    "fmt": "prettier --write \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/.*rc\" \"**/*.yml\" \"**/*.ts\"",
+    "test": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JustSaveLife/server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JustSaveLife/server/issues"
+  },
+  "homepage": "https://github.com/JustSaveLife/server#readme",
+  "devDependencies": {
+    "eslint": "^7.8.1",
+    "eslint-config-metarhia": "^7.0.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.1.2"
+  }
+}
