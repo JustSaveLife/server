@@ -1,2 +1,1 @@
-# server
-Just Save Life Server
+# Just Save Life Server [![CI Status](https://github.com/JustSaveLife/server/workflows/Testing%20CI/badge.svg)](https://github.com/JustSaveLife/server/actions?query=workflow%3A%22Testing+CI%22+branch%3Amaster)
