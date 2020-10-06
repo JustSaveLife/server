@@ -32,7 +32,7 @@ const pad = (padChar, length) => new Array(length + 1).join(padChar);
 
 const { userAgent } = navigator;
 
-const isMobile = () => (
+const isMobile = () =>
   userAgent.match(/Android/i) ||
   userAgent.match(/webOS/i) ||
   userAgent.match(/iPhone/i) ||
@@ -40,7 +40,7 @@ const isMobile = () => (
   userAgent.match(/iPod/i) ||
   userAgent.match(/BlackBerry/i) ||
   userAgent.match(/Windows Phone/i)
-);
+;
 
 let viewportHeight, viewableRatio;
 let contentHeight, scrollHeight;
@@ -82,9 +82,9 @@ const inputSetValue = value => {
     value = pad('*', value.length);
   }
   value = value.replace(/ /g, '&nbsp;');
-  controlInput.innerHTML = (
+  controlInput.innerHTML =
     controlInput.inputPrompt + value + '<span>&block;</span>'
-  );
+  ;
 };
 
 const input = (type, prompt, callback) => {
@@ -199,7 +199,7 @@ const initKeyboard = () => {
       elementKey.innerHTML = char;
       elementKey.inputChar = char;
       elementKey.className = 'key';
-      elementKey.style.opacity = ((i + j) % 2) ? 0.8 : 1;
+      elementKey.style.opacity = (i + j) % 2 ? 0.8 : 1;
       elementKey.addEventListener('click', keyboardClick);
       elementLine.appendChild(elementKey);
     }
