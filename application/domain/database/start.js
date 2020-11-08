@@ -1,4 +1,6 @@
 async () => {
   console.debug('Connect to pg');
-  domain.database.example = new lib.pg.Database(config.database);
+  const database = new metarhia.metasql.Database(config.database);
+  domain.db = database;
+  application.auth.init(database);
 };
