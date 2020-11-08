@@ -37,9 +37,6 @@
     "prettier": "^2.1.2"
   },
   "dependencies": {
-    "impress": "^2.0.0-alpha.30",
-    "metacom": "^0.1.0-alpha.7",
-    "metasql": "^0.2.1",
-    "pg": "^8.4.2"
+    "impress": "^2.0.0-alpha.34"
   }
 }
