@@ -1,49 +1,75 @@
-CREATE TABLE "Feature" (
-  "featureId" bigint generated always as identity,
-  "name" varchar NOT NULL
-);
+BEGIN TRANSACTION;
 
-ALTER TABLE "Feature" ADD CONSTRAINT "pkFeature" PRIMARY KEY ("feature");
+CREATE TABLE "Feature" (
+  "featureId"         bigint  PRIMARY KEY  generated always as identity  NOT NULL,
+  "name"              varchar                                            NOT NULL
+);
 
 CREATE TABLE "Hospital" (
-  "hospitalId" bigint generated always as identity,
-  "name" varchar NOT NULL,
-  "login" varchar NOT NULL,
-  "password" varchar NOT NULL,
-  "location" point,
-  "city" varchar NOT NULL,
-  "street" varchar NOT NULL,
-  "building" varchar NOT NULL,
-  "phone" varchar NOT NULL
+  "hospitalId"        bigint  PRIMARY KEY  generated always as identity  NOT NULL,
+  "name"              varchar                                            NOT NULL,
+  "login"             varchar                                            NOT NULL,
+  "password"          varchar                                            NOT NULL,
+  "location"          point,
+  "coordinates"       JSONB                                              NOT NULL,
+  "city"              varchar                                            NOT NULL,
+  "street"            varchar                                            NOT NULL,
+  "building"          varchar                                            NOT NULL,
+  "phone"             varchar                                            NOT NULL,
+  CONSTRAINT "akHospitalAddressKey" UNIQUE ("city", "street", "building")
 );
-
-ALTER TABLE "Hospital" ADD CONSTRAINT "pkHospital" PRIMARY KEY ("hospital");
 
 CREATE TABLE "HospitalFeature" (
-  "hospitalId" bigint NOT NULL,
-  "featureId" bigint NOT NULL
+  "hospitalId"        bigint                                             NOT NULL,
+  "featureId"         bigint                                             NOT NULL,
+  CONSTRAINT "pkHospitalFeature" PRIMARY KEY ("hospitalId", "featureId"),
+  CONSTRAINT "fkHospitalFeatureHospital" FOREIGN KEY ("hospitalId") REFERENCES "Hospital" ("hospitalId"),
+  CONSTRAINT "fkHospitalFeatureFeature" FOREIGN KEY ("featureId") REFERENCES "Feature" ("featureId")
 );
 
-ALTER TABLE "HospitalFeature" ADD CONSTRAINT "pkHospitalFeature" PRIMARY KEY ("hospitalId", "featureId");
-ALTER TABLE "HospitalFeature" ADD CONSTRAINT "fkHospitalFeatureHospital" FOREIGN KEY ("hospitalId") REFERENCES "Hospital" ("hospitalId");
-ALTER TABLE "HospitalFeature" ADD CONSTRAINT "fkHospitalFeatureFeature" FOREIGN KEY ("featureId") REFERENCES "Feature" ("featureId");
-CREATE UNIQUE INDEX "akHospitalAddressKey" ON "Hospital" ("city", "street", "building");
+CREATE TABLE "AmbulanceDoctor" (
+  "doctorId"          bigint  PRIMARY KEY  generated always as identity  NOT NULL,
+  "name"              varchar                                            NOT NULL,
+  "phone"             varchar                                            NOT NULL,
+  "password"          varchar                                            NOT NULL
+);
+
+CREATE TABLE "AmbulanceSubstation" (
+  "stationId"         bigint  PRIMARY KEY  generated always as identity  NOT NULL,
+  "login"             varchar                                            NOT NULL,
+  "password"          varchar                                            NOT NULL,
+  "name"              varchar                                            NOT NULL,
+  "city"              varchar                                            NOT NULL,
+  "street"            varchar                                            NOT NULL,
+  "building"          varchar                                            NOT NULL,
+  "phone"             varchar                                            NOT NULL,
+  CONSTRAINT "akAmbulanceSubstationAddressKey" UNIQUE ("city", "street", "building")
+);
+
+CREATE TABLE "AmbulanceStationDoctors" (
+ "stationId" bigint NOT NULL,
+ "doctorId" bigint NOT NULL,
+ CONSTRAINT "fkAmbulanceStation" FOREIGN KEY ("stationId") REFERENCES "AmbulanceSubstation" ("stationId"),
+ CONSTRAINT "fkAmbulanceDoctor" FOREIGN KEY ("doctorId") REFERENCES "AmbulanceDoctor" ("doctorId")
+);
 
 CREATE TABLE "Message" (
-  "messageId" bigint generated always as identity,
-  "address" varchar NOT NULL,
-  "age" integer NOT NULL,
-  "weight" integer NOT NULL,
-  "gender" varchar NOT NULL,
-  "registration" timestamp with time zone NOT NULL,
-  "episode" timestamp with time zone NOT NULL,
-  "gcScale" integer NOT NULL,
-  "arterialPressure" varchar NOT NULL,
-  "symptoms" varchar NOT NULL,
-  "patology" varchar NOT NULL,
-  "solution" varchar NOT NULL,
-  "hospitalId" bigint
+  "messageId"         bigint  PRIMARY KEY  generated always as identity   NOT NULL,
+  "address"           varchar                                             NOT NULL,
+  "age"               integer                                             NOT NULL,
+  "weight"            integer                                             NOT NULL,
+  "gender"            varchar                                             NOT NULL,
+  "registration"      timestamp with time zone                            NOT NULL,
+  "episode"           timestamp with time zone                            NOT NULL,
+  "gcScale"           integer                                             NOT NULL,
+  "arterialPressure"  varchar                                             NOT NULL,
+  "symptoms"          varchar                                             NOT NULL,
+  "pathology"         varchar                                             NOT NULL,
+  "solution"          varchar                                             NOT NULL,
+  "hospitalId"        bigint,
+  "doctorId"          bigint,
+  CONSTRAINT "fkMessageHospital" FOREIGN KEY ("hospitalId") REFERENCES "Hospital" ("hospitalId"),
+  CONSTRAINT "fkMessageAmbulanceDoctor" FOREIGN KEY ("doctorId") REFERENCES "AmbulanceDoctor" ("doctorId")
 );
 
-ALTER TABLE "Message" ADD CONSTRAINT "pkMessage" PRIMARY KEY ("message");
-ALTER TABLE "Message" ADD CONSTRAINT "fkMessageHospital" FOREIGN KEY ("hospitalId") REFERENCES "Hospital" ("hospitalId");
+COMMIT;
