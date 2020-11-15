@@ -34,7 +34,7 @@ CREATE TABLE "AmbulanceDoctor" (
   "password"          varchar                                            NOT NULL
 );
 
-CREATE TABLE "AmbulanceSubstation" (
+CREATE TABLE "AmbulanceStation" (
   "stationId"         bigint  PRIMARY KEY  generated always as identity  NOT NULL,
   "login"             varchar                                            NOT NULL,
   "password"          varchar                                            NOT NULL,
@@ -43,13 +43,13 @@ CREATE TABLE "AmbulanceSubstation" (
   "street"            varchar                                            NOT NULL,
   "building"          varchar                                            NOT NULL,
   "phone"             varchar                                            NOT NULL,
-  CONSTRAINT "akAmbulanceSubstationAddressKey" UNIQUE ("city", "street", "building")
+  CONSTRAINT "akAmbulanceStationAddressKey" UNIQUE ("city", "street", "building")
 );
 
 CREATE TABLE "AmbulanceStationDoctors" (
  "stationId" bigint NOT NULL,
  "doctorId" bigint NOT NULL,
- CONSTRAINT "fkAmbulanceStation" FOREIGN KEY ("stationId") REFERENCES "AmbulanceSubstation" ("stationId"),
+ CONSTRAINT "fkAmbulanceStation" FOREIGN KEY ("stationId") REFERENCES "AmbulanceStation" ("stationId"),
  CONSTRAINT "fkAmbulanceDoctor" FOREIGN KEY ("doctorId") REFERENCES "AmbulanceDoctor" ("doctorId")
 );
 
