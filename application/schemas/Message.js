@@ -12,7 +12,7 @@
   gcScale: 'number',
   arterialPressure: 'string',
   symptoms: 'string',
-  patology: 'string',
+  pathology: 'string',
   solution: 'string',
 
   hospital: { type: 'Hospital', required: false },
