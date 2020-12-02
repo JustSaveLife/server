@@ -8,11 +8,7 @@
     { name: 'Timur Shemsedinov', email: 'timur.shemsedinov@gmail.com' },
   ],
 
-  extensions: [
-    'hstore',
-    'postgis',
-    'postgis_topology',
-  ],
+  extensions: ['hstore', 'postgis', 'postgis_topology'],
 
   connection: {
     host: '127.0.0.1',

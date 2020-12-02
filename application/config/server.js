@@ -12,5 +12,5 @@
   workers: {
     pool: 2,
     timeout: 3000,
-  }
+  },
 });

@@ -69,7 +69,7 @@ export class Metacom {
   }
 
   ready() {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (this.socket.readyState === WebSocket.OPEN) resolve();
       else this.socket.addEventListener('open', resolve);
     });
@@ -93,7 +93,7 @@ export class Metacom {
   }
 
   httpCall(iname, ver) {
-    return methodName => (args = {}) => {
+    return (methodName) => (args = {}) => {
       const callId = ++this.callId;
       const interfaceName = ver ? `${iname}.${ver}` : iname;
       const target = interfaceName + '/' + methodName;
@@ -105,7 +105,7 @@ export class Metacom {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(packet),
-      }).then(res => {
+      }).then((res) => {
         const { status } = res;
         if (status === 200) return res.json().then(({ result }) => result);
         throw new Error(`Status Code: ${status}`);
@@ -114,7 +114,7 @@ export class Metacom {
   }
 
   socketCall(iname, ver) {
-    return methodName => async (args = {}) => {
+    return (methodName) => async (args = {}) => {
       const callId = ++this.callId;
       const interfaceName = ver ? `${iname}.${ver}` : iname;
       const target = interfaceName + '/' + methodName;
