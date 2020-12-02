@@ -22,9 +22,9 @@
   "bugs": {
     "url": "https://github.com/JustSaveLife/server/issues"
   },
-  "homepage": "https://github.com/JustSaveLife/server#readme",
+  "homepage": "https://github.com/JustSaveLife",
   "engines": {
-    "node": ">=12.9.0"
+    "node": "^12.9 || 14"
   },
   "devDependencies": {
     "@types/node": "^14.14.10",
