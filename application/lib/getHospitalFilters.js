@@ -1,14 +1,17 @@
 async ({ time, mozok }) => {
   const mozokResult = lib.utils.getMozokResult(mozok);
   const { episode, symptompsDefinition } = time;
+  const nowDateInMs = new Date().getMilliseconds();
+  const episodeTimeDifference = nowDateInMs - episode;
+  const symptomsTimeDifference = nowDateInMs - episode;
   const { intervalsInMs, teraphies } = lib.utils;
 
-  if (episode <= intervalsInMs.threeHours) {
+  if (episodeTimeDifference <= intervalsInMs.threeHours) {
     return { teraphies: [teraphies.thrombolytic], includeFeatures: false };
   }
 
-  if (episode > intervalsInMs.threeHours &&
-    episode < intervalsInMs.threeHours) {
+  if (episodeTimeDifference > intervalsInMs.threeHours &&
+    episodeTimeDifference < intervalsInMs.threeHours) {
     return mozokResult <= 3
       ? { teraphies: [teraphies.thrombolytic], includeFeatures: true }
       : {
@@ -17,8 +20,8 @@ async ({ time, mozok }) => {
       };
   }
 
-  if (episode <= intervalsInMs.day &&
-    symptompsDefinition <= intervalsInMs.threeHours) {
+  if (episodeTimeDifference <= intervalsInMs.day &&
+    symptomsTimeDifference <= intervalsInMs.threeHours) {
     return mozokResult <= 3
       ? { teraphies: [teraphies.thrombolytic], includeFeatures: true }
       : {
@@ -27,8 +30,8 @@ async ({ time, mozok }) => {
       };
   }
 
-  if (episode <= intervalsInMs.day &&
-    symptompsDefinition > intervalsInMs.threeHours) {
+  if (episodeTimeDifference <= intervalsInMs.day &&
+    symptomsTimeDifference > intervalsInMs.threeHours) {
     return mozokResult <= 3
       ? { teraphies: [teraphies.thrombolytic], includeFeatures: false }
       : {
@@ -37,7 +40,7 @@ async ({ time, mozok }) => {
       };
   }
 
-  if (episode > intervalsInMs.day) {
+  if (episodeTimeDifference > intervalsInMs.day) {
     return { teraphies: [...Object.values(teraphies)], includeFeatures: false };
   }
 };
