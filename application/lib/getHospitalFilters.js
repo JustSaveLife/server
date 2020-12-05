@@ -33,7 +33,7 @@ async ({ time, mozok }) => {
   if (episodeTimeDifference <= intervalsInMs.day &&
     symptomsTimeDifference > intervalsInMs.threeHours) {
     return mozokResult <= 3
-      ? { teraphies: [teraphies.thrombolytic], includeFeatures: false }
+      ? { teraphies: [teraphies.symptom], includeFeatures: false }
       : {
         teraphies:[teraphies.thrombospiration, teraphies.endovascular],
         includeFeatures: true
@@ -41,6 +41,6 @@ async ({ time, mozok }) => {
   }
 
   if (episodeTimeDifference > intervalsInMs.day) {
-    return { teraphies: [...Object.values(teraphies)], includeFeatures: false };
+    return { teraphies: [teraphies.symptom], includeFeatures: false };
   }
 };

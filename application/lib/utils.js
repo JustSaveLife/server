@@ -6,10 +6,11 @@
   },
 
   teraphies: {
-    thrombolytic: 'TLT',
-    endovascular: 'EVT',
-    thrombectomy: 'TE',
-    thrombospiration: 'TA',
+    thrombolytic: 'тромболітична терапія',
+    endovascular: 'ендоваскулярна терапія',
+    thrombectomy: 'тромбектомія',
+    thrombospiration: 'тромбаспірація',
+    symptom: 'симптоматична терапія'
   },
 
   features: {
