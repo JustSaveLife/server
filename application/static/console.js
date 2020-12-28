@@ -90,16 +90,6 @@ const followLink = async (event) => {
   application.print(text);
 };
 
-const blobToBase64 = (blob) => {
-  const reader = new FileReader();
-  reader.readAsDataURL(blob);
-  return new Promise((resolve) => {
-    reader.onloadend = () => {
-      resolve(reader.result);
-    };
-  });
-};
-
 const inputKeyboardEvents = {
   ESC() {
     application.clear();
@@ -169,54 +159,8 @@ const keyboardClick = (e) => {
   return false;
 };
 
-const uploadFile = (file, done) => {
-  blobToBase64(file).then((url) => {
-    const data = url.substring(url.indexOf(',') + 1);
-    api.example.uploadFile({ name: file.name, data }).then(done);
-  });
-};
-
-const saveFile = (fileName, blob) => {
-  const a = document.createElement('a');
-  a.style.display = 'none';
-  document.body.appendChild(a);
-  const url = window.URL.createObjectURL(blob);
-  a.href = url;
-  a.download = fileName;
-  a.click();
-  URL.revokeObjectURL(url);
-};
-
-const upload = () => {
-  const element = document.createElement('form');
-  element.style.visibility = 'hidden';
-  element.innerHTML = '<input id="fileSelect" type="file" multiple />';
-  document.body.appendChild(element);
-  const fileSelect = document.getElementById('fileSelect');
-  fileSelect.click();
-  fileSelect.onchange = () => {
-    const files = Array.from(fileSelect.files);
-    application.print('Uploading ' + files.length + ' file(s)');
-    files.sort((a, b) => a.size - b.size);
-    let i = 0;
-    const uploadNext = () => {
-      const file = files[i];
-      uploadFile(file, () => {
-        application.print(`name: ${file.name}, size: ${file.size} done`);
-        i++;
-        if (i < files.length) {
-          return uploadNext();
-        }
-        document.body.removeChild(element);
-        commandLoop();
-      });
-    };
-    uploadNext();
-  };
-};
-
 class Keyboard {
-  constructor(application) {
+  constructor() {
     this.controlKeyboard = document.getElementById('controlKeyboard');
     if (!isMobile()) return;
     for (let i = 0; i < KEYBOARD_LAYOUT.length; i++) {
@@ -392,12 +336,7 @@ class Application {
 
   async exec(line) {
     const args = line.split(' ');
-    if (args[0] === 'upload') {
-      upload();
-    } else if (args[0] === 'download') {
-      const packet = await api.example.downloadFile();
-      console.log({ packet });
-    } else if (args[0] === 'counter') {
+    if (args[0] === 'counter') {
       const packet = await api.example.counter();
       application.print(`counter: ${packet.result}`);
     } else {
