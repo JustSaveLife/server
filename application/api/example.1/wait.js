@@ -1,4 +1,3 @@
-async ({ delay }) =>
-  new Promise((resolve) => {
-    setTimeout(resolve, delay, 'done');
-  });
+async ({ delay }) => new Promise((resolve) => {
+  setTimeout(resolve, delay, 'done');
+});
